@@ -18,6 +18,7 @@ import com.codefreaks.aegiscall.call.SpeechRecognizerManager
 import com.codefreaks.aegiscall.data.repository.GeminiRepository
 import kotlinx.coroutines.launch
 import org.json.JSONObject
+import com.codefreaks.aegiscall.security.ScamSignalDetector
 
 @Composable
 fun CallScreen(
@@ -25,6 +26,10 @@ fun CallScreen(
 ) {
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
+
+    val signalDetector = remember {
+        ScamSignalDetector()
+    }
 
     val geminiRepository = remember {
         GeminiRepository()
@@ -85,43 +90,54 @@ fun CallScreen(
                 /*
                  * Send updated transcript to Gemini.
                  */
-                isAnalyzing = true
-                error = ""
+                if (signalDetector.shouldAnalyze(transcript)) {
 
-                scope.launch {
+                    isAnalyzing = true
+                    error = ""
 
-                    try {
+                    scope.launch {
 
-                        val response =
-                            geminiRepository.analyzeTranscript(
-                                transcript
+                        try {
+
+                            // Only send the most recent part of the
+                            // conversation to Gemini to reduce token usage.
+                            val analysisText =
+                                if (transcript.length > 800) {
+                                    transcript.takeLast(800)
+                                } else {
+                                    transcript
+                                }
+
+                            val response =
+                                geminiRepository.analyzeTranscript(
+                                    analysisText
+                                )
+
+                            parseGeminiResponse(
+                                response = response,
+                                onRisk = {
+                                    riskScore = it
+                                },
+                                onScamType = {
+                                    scamType = it
+                                },
+                                onTactics = {
+                                    tactics = it
+                                },
+                                onAdvice = {
+                                    advice = it
+                                }
                             )
 
-                        parseGeminiResponse(
-                            response = response,
-                            onRisk = {
-                                riskScore = it
-                            },
-                            onScamType = {
-                                scamType = it
-                            },
-                            onTactics = {
-                                tactics = it
-                            },
-                            onAdvice = {
-                                advice = it
-                            }
-                        )
+                        } catch (e: Exception) {
 
-                    } catch (e: Exception) {
+                            error =
+                                e.message ?: "AI analysis failed"
 
-                        error =
-                            e.message
-                                ?: "AI analysis failed"
+                        } finally {
 
-                    } finally {
-
-                        isAnalyzing = false
+                            isAnalyzing = false
+                        }
                     }
                 }
             },
