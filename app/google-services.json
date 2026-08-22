@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "625610123177",
+    "project_id": "aegis-call",
+    "storage_bucket": "aegis-call.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:625610123177:android:4334d59fef89a948c306b8",
+        "android_client_info": {
+          "package_name": "com.codefreaks.aegiscall"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCknrDIqz0FFr7Ln2QUHXn6qOAo50xV3Ys"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
