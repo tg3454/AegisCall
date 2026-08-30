@@ -1,3 +1,31 @@
 <resources>
     <string name="app_name">AegisCall</string>
+
+    <!-- Auth, shared -->
+    <string name="auth_wordmark">AEGISCALL</string>
+    <string name="auth_email">Email</string>
+    <string name="auth_email_placeholder">you@example.com</string>
+    <string name="auth_password">Password</string>
+    <string name="auth_show">Show</string>
+    <string name="auth_hide">Hide</string>
+
+    <!-- Log in -->
+    <string name="login_headline">Welcome back</string>
+    <string name="login_subhead">Log in to keep screening unknown callers.</string>
+    <string name="login_password_placeholder">Your password</string>
+    <string name="login_forgot">Forgot password?</string>
+    <string name="login_action">Log in</string>
+    <string name="login_footer_prompt">New to AegisCall?</string>
+    <string name="login_footer_action">Create an account</string>
+
+    <!-- Sign up -->
+    <string name="signup_headline">Create your account</string>
+    <string name="signup_subhead">Set up an email and password to start screening calls.</string>
+    <string name="signup_password_placeholder">At least 8 characters</string>
+    <string name="signup_confirm">Confirm password</string>
+    <string name="signup_confirm_placeholder">Type it again</string>
+    <string name="signup_terms">I agree to the Terms and Privacy Policy.</string>
+    <string name="signup_action">Create account</string>
+    <string name="signup_footer_prompt">Already have an account?</string>
+    <string name="signup_footer_action">Log in</string>
 </resources>
